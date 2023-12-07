@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: web-frontend
-        image: jacobswout/apache2-wj:latest
+        image: jacobswout/apachecorrect-wj:latest
         ports:
         - containerPort: 80
