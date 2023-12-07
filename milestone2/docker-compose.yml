@@ -1,0 +1,51 @@
+version: '3'
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  web-frontend:
+    container_name: apache-container
+    build:
+      context: .
+      dockerfile: build/apache/Dockerfile
+    expose:
+      - "80"
+    volumes:
+      - ./build/apache:/var/www/html
+    depends_on:
+      - api-service
+    environment:
+      API_ENDPOINT: "http://api-service:3000"
+    networks:
+      - mynetwork
+
+  api-service:
+    container_name: api-container
+    build:
+      context: .
+      dockerfile: build/api-service/Dockerfile
+    expose:
+      - "3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgres://user:password@postgres:5432/milestone2"
+    networks:
+      - mynetwork
+
+  postgres:
+    container_name: postgres-container
+    build:
+      context: .
+      dockerfile: build/postgreSQL/Dockerfile
+    volumes:
+      - ./build/postgreSQL/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: milestone2
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks:
+      - mynetwork
+
