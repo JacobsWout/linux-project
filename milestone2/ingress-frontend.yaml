@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: apache.local
+    - host: apache-wj.local
       http:
         paths:
           - path: /

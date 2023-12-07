@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: milestone2.local
+    - host: milestone2-wj.local
       http:
         paths:
           - path: /
